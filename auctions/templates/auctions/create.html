@@ -1,0 +1,50 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Crear Nueva Subasta</h2>
+
+    <form action="{% url 'create' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Producto</label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="Producto"> 
+        </div>
+        <div class="form-group">
+            <label for="price">Precio</label>
+            <input type="number" name="price" class="form-control" id="price" placeholder="Precio">
+        </div>
+        <div class="form-group">
+            <label for="available">Disponibilidad:</label>
+            <select name="available" id="available">
+                <option value="Disponible">Disponible</option>
+                <option value="Agotado">Agotado</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="description">Descripción</label>
+            <input type="text" name="description" class="form-control" id="description" placeholder="Añada una descripción del Producto">
+        </div>
+        <div class="form-group">
+            <label for="imgURL1">Link de la imagen #1</label>
+            <input type="text" name="imgURL1" class="form-control" id="imgURL1" placeholder="Añada el link de la imagen">
+        </div>
+        <div class="form-group">
+            <label for="imgURL2">Link de la imagen #2</label>
+            <input type="text" name="imgURL2" class="form-control" id="imgURL2" placeholder="Añada el link de la imagen">
+        </div>
+        <div class="form-group">
+            <label for="imgURL3">Link de la imagen #3</label>
+            <input type="text" name="imgURL3" class="form-control" id="imgURL3" placeholder="Añada el link de la imagen">
+        </div>
+        <div class="form-group">
+            <label for="category">Escoja una categoria</label>
+            <select name="category" id="category">
+                {% for categoria in categorias %}
+                <option value="{{ categoria }}">{{ categoria }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Crear subasta</button>
+    </form>
+
+{% endblock %}
