@@ -1,7 +1,19 @@
 {% extends "auctions/layout.html" %}
+{% load humanize %}
 
 {% block body %}
-    <h2>Active Listings</h2>
-
-    TODO
-{% endblock %}
+    <h2>Subastas Activas</h2>
+    <div class="row mx-2">
+    {% for subastas in subastas %}
+    <div class="card mx-2" style="width: 18rem;">
+        <img src="{{ subastas.imgURL1 }}" class="card-img-top" alt="{{ subastas.name }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ subastas.name }}</h5>
+          <p class="card-text">$ {{ subastas.price }}.</p>
+          <p class="card-text">{{ subastas.description }}.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    {% endblock %}
