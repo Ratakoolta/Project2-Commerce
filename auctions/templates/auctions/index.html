@@ -21,7 +21,7 @@
           <h5 class="card-title">{{ subastas.name }}</h5>
           <p class="card-text">$ {{ subastas.price }}.</p>
           <p class="card-text">{{ subastas.description }}.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <a href="{% url 'detalles' id=subastas.id %}" class="btn btn-primary">Ver detalles</a>
         </div>
       </div>
     {% endfor %}

@@ -107,3 +107,9 @@ def chooseCategory(request):
         "subastas": subastas,
         "categorias": Categorias,
     })
+
+def listingDetails(request, id):
+    ListingData = Listing.objects.get(pk=id)
+    return render(request, "auctions/detalles.html", {
+        "listingDetails": ListingData
+    })
