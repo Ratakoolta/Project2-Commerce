@@ -1,17 +1,49 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+    <div class="container">
+        {% if message %}
+            {% if update %}
+            <div class="alert alert-success" role="alert"> 
+                {{ message }}
+            </div>
+            {% else %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    {% if not listingDetails.isActive and user == listingDetails.price.user %}
+    <div class="alert alert-success" role="alert">
+        La subasta terminó, ¡has ganado!
+    </div>
+    {% endif %}    
     <div class="row mx-2">
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and listingDetails.isActive %}
+                <form action="{% url 'addBid' id=listingDetails.id %}" method="POST" class="mx-3">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="price"></label>
+                        <input type="number" min="0" name="newBid" placehold="Ofertar" placeholder="Haga una Oferta"> <button type="submit" class="btn btn-primary">Ofertar</button>
+                    </div>
+                </form>            
             {% if subastaWatchlist %}
-                <form action="{% url 'removeWatchlist' id=listingDetails.id %}" method="POST"> 
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger">Quitar de Seguimiento</button> 
+                <form action="{% url 'removeWatchlist' id=listingDetails.id %}" method="POST" class="mx-3"> 
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Quitar de Seguimiento</button> 
                 </form>
             {% else %}
                 <form action="{% url 'addWatchlist' id=listingDetails.id %}" method="POST"> 
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success">Hacer Seguimiento</button> </form>
+            {% endif %}
+            {% if isOwner %}
+            <form action="{% url 'endAuction' id=listingDetails.id %}" method="POST">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-success">Hacer Seguimiento</button> </form>
+                <button type="submit" class="btn btn-primary">Finalizar Subasta</button>
+            </form>            
             {% endif %}
         {% endif %}
     </div>
@@ -20,7 +52,7 @@
     <img src="{{ listingDetails.imgURL1 }}" width="400px">
     <img src="{{ listingDetails.imgURL2 }}" width="400px">
     <img src="{{ listingDetails.imgURL3 }}" width="400px">
-    <h4>${{ listingDetails.price }}</h4> 
+    <h4>Precio Inicial ${{ listingDetails.price.bid }}</h4> 
     <p>{{ listingDetails.description }}</p>
     <p>Usuario: {{ listingDetails.usuario }}</p>
 

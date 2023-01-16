@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Category, Listing, Comment
+from .models import User, Category, Listing, Comment, Bid
 
 
 def index(request):
@@ -32,9 +32,11 @@ def create(request):
         category = request.POST["category"]
         currentUser = request.user
         categoryData = Category.objects.get(categoryType=category)
+        bid = Bid(bid=int(price), user=currentUser)
+        bid.save()
         newListing = Listing(
             name=name,
-            price=int(price),
+            price=bid,
             available=available,
             description=description,
             imgURL1=imgURL1,
@@ -112,10 +114,12 @@ def listingDetails(request, id):
     ListingData = Listing.objects.get(pk=id)
     subastaWatchlist = request.user in ListingData.watchlist.all()
     allComments = Comment.objects.filter(subasta=ListingData)
+    isOwner = request.user.username == ListingData.usuario.username
     return render(request, "auctions/detalles.html", {
         "listingDetails": ListingData,
         "subastaWatchlist": subastaWatchlist,
-        "allComments": allComments
+        "allComments": allComments,
+        "isOwner": isOwner
     })
 
 def addWatchlist(request, id):
@@ -135,6 +139,51 @@ def verWatchlist(request):
     subastas = currentUser.watchlist.all()
     return render(request, "auctions/watchlist.html", {
         "subastas": subastas
+    })
+
+def addBid (request,id):
+    newBid = request.POST['newBid']
+    listingData = Listing.objects.get(pk=id)
+    subastaWatchlist = request.user in listingData.watchlist.all()
+    allComments = Comment.objects.filter(subasta=listingData)
+    isOwner = request.user.username == listingData.usuario.username 
+    if int(newBid) > listingData.price.bid:
+        updateBid = Bid(user=request.user, bid=int(newBid))
+        updateBid.save()
+        listingData.price = updateBid
+        listingData.save()
+        return render(request, "auctions/detalles.html", {
+            "listingDetails": listingData,
+            "message": "Oferta Exitosa", 
+            "update": True,
+            "subastaWatchlist": subastaWatchlist,
+            "isOwner": isOwner,
+            "allComments": allComments
+        })
+    else:
+        return render(request, "auctions/detalles.html", {
+        "listingDetails": listingData,
+        "message": "Oferta Fallida", 
+        "update": False,
+        "subastaWatchlist": subastaWatchlist,
+        "isOwner": isOwner,
+        "allComments": allComments
+        })
+
+def endAuction(request, id):
+    listingData = Listing.objects.get(pk=id)
+    listingData.isActive = False
+    listingData.save()
+    isOwner = request.user.username == listingData.usuario.username
+    subastaWatchlist = request.user in listingData.watchlist.all()
+    allComments = Comment.objects.filter(subasta=listingData) 
+    return render(request, "auctions/detalles.html", {
+        "listingDetails": listingData,
+        "subastaWatchlist": subastaWatchlist,
+        "allComments": allComments,
+        "update": True,
+        "isOwner": isOwner,
+        "message": "La subasta ha sido finalizada"
     })
 
 def addComment(request, id):

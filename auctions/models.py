@@ -11,9 +11,13 @@ class Category(models.Model):
     def __str__(self):
         return self.categoryType
 
+class Bid(models.Model):
+    bid = models.IntegerField(default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="userBid")
+
 class Listing(models.Model):
     name = models.CharField(max_length=100)
-    price = models.IntegerField()
+    price = models.ForeignKey(Bid, on_delete=models.CASCADE, blank=True, null=True, related_name="bidAmount")
     available = models.CharField(max_length=20)
     description = models.CharField(max_length=2000)
     imgURL1 = models.CharField(max_length=250)

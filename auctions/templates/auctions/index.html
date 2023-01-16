@@ -19,7 +19,7 @@
         <img src="{{ subastas.imgURL1 }}" class="card-img-top" alt="{{ subastas.name }}">
         <div class="card-body">
           <h5 class="card-title">{{ subastas.name }}</h5>
-          <p class="card-text">$ {{ subastas.price }}.</p>
+          <p class="card-text">$ {{ subastas.price.bid }}.</p>
           <p class="card-text">{{ subastas.description }}.</p>
           <a href="{% url 'detalles' id=subastas.id %}" class="btn btn-primary">Ver detalles</a>
         </div>
