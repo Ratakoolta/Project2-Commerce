@@ -1,0 +1,19 @@
+{% extends "auctions/layout.html" %}
+{% load humanize %}
+
+{% block body %}
+    <h2>Lista de Seguimiento</h2>
+    <div class="row mx-2">
+    {% for watchlist in subastas %}
+    <div class="card mx-2" style="width: 18rem;">
+        <img src="{{ watchlist.imgURL1 }}" class="card-img-top" alt="{{ watchlist.name }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ watchlist.name }}</h5>
+          <p class="card-text">$ {{ watchlist.price }}.</p>
+          <p class="card-text">{{ watchlist.description }}.</p>
+          <a href="{% url 'detalles' id=watchlist.id %}" class="btn btn-primary">Ver detalles</a>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    {% endblock %}

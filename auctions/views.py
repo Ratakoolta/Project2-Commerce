@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Category, Listing
+from .models import User, Category, Listing, Comment
 
 
 def index(request):
@@ -110,6 +110,44 @@ def chooseCategory(request):
 
 def listingDetails(request, id):
     ListingData = Listing.objects.get(pk=id)
+    subastaWatchlist = request.user in ListingData.watchlist.all()
+    allComments = Comment.objects.filter(subasta=ListingData)
     return render(request, "auctions/detalles.html", {
-        "listingDetails": ListingData
+        "listingDetails": ListingData,
+        "subastaWatchlist": subastaWatchlist,
+        "allComments": allComments
     })
+
+def addWatchlist(request, id):
+    listingData = Listing.objects.get(pk=id)
+    currentUser = request.user
+    listingData.watchlist.add(currentUser)
+    return HttpResponseRedirect (reverse("detalles", args=(id, )))
+
+def removeWatchlist (request, id):
+    listingData = Listing.objects.get(pk=id) 
+    currentUser = request.user 
+    listingData.watchlist.remove(currentUser)
+    return HttpResponseRedirect(reverse("detalles", args=(id, )))
+
+def verWatchlist(request):
+    currentUser = request.user
+    subastas = currentUser.watchlist.all()
+    return render(request, "auctions/watchlist.html", {
+        "subastas": subastas
+    })
+
+def addComment(request, id):
+    currentUser = request.user
+    listingData = Listing.objects.get(pk=id)
+    message = request.POST['newComment']
+
+    newComment = Comment(
+        author=currentUser,
+        subasta=listingData,
+        message=message
+    )
+
+    newComment.save()
+
+    return HttpResponseRedirect(reverse("detalles", args=(id, )))

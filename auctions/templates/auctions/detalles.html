@@ -1,11 +1,50 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<h2>{{ listingDetails.name }}</h2>
-<img src="{{ listingDetails.imgURL1 }}" width="400px">
-<img src="{{ listingDetails.imgURL2 }}" width="400px">
-<img src="{{ listingDetails.imgURL3 }}" width="400px">
-<h4>${{ listingDetails.price }}</h4> 
-<p>{{ listingDetails.description }}</p>
-<p>Usuario: {{ listingDetails.usuario }}</p>
+    <div class="row mx-2">
+        {% if user.is_authenticated %}
+            {% if subastaWatchlist %}
+                <form action="{% url 'removeWatchlist' id=listingDetails.id %}" method="POST"> 
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Quitar de Seguimiento</button> 
+                </form>
+            {% else %}
+                <form action="{% url 'addWatchlist' id=listingDetails.id %}" method="POST"> 
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Hacer Seguimiento</button> </form>
+            {% endif %}
+        {% endif %}
+    </div>
+    
+    <h2>{{ listingDetails.name }}</h2>
+    <img src="{{ listingDetails.imgURL1 }}" width="400px">
+    <img src="{{ listingDetails.imgURL2 }}" width="400px">
+    <img src="{{ listingDetails.imgURL3 }}" width="400px">
+    <h4>${{ listingDetails.price }}</h4> 
+    <p>{{ listingDetails.description }}</p>
+    <p>Usuario: {{ listingDetails.usuario }}</p>
+
+    <h2>Comentarios</h2>
+
+    <ul class="list-group">
+        {% for comment in allComments %} 
+        <li class="list-group-item">{{ comment.message }}
+            <br>
+            <p>Usuario: <strong>{{ comment.author }}</strong></p>
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% if user.is_authenticated %}
+        <form action="{% url 'addComment' id=listingDetails.id %}" method="POST"> 
+            {% csrf_token%}
+            <div class="form-group">
+                <label><h5>Haga un Comentario</h5></label>
+                <br>
+                <input type="textbox" name="newComment" placehold="Haga un Comentario"> 
+                <button type="submit" class="btn btn-primary">Comentar</button>
+            </div>
+        </form>
+    {% endif %}
+    
 {% endblock %}
