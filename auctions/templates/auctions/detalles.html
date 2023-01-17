@@ -35,7 +35,7 @@
                     <button type="submit" class="btn btn-danger">Quitar de Seguimiento</button> 
                 </form>
             {% else %}
-                <form action="{% url 'addWatchlist' id=listingDetails.id %}" method="POST"> 
+                <form action="{% url 'addWatchlist' id=listingDetails.id %}" method="POST" class="mx-3"> 
                     {% csrf_token %}
                     <button type="submit" class="btn btn-success">Hacer Seguimiento</button> </form>
             {% endif %}
