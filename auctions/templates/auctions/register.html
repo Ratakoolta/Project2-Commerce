@@ -7,24 +7,24 @@
     {% if message %}
         <div>{{ message }}</div>
     {% endif %}
-
+<div class="card" style="background-color: rgb(128, 226, 226); padding: 20px; width: fit-content; ">
     <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
-        <div class="form-group">
+        <div class="form-group" style="width: 30ch;">
             <input class="form-control" autofocus type="text" name="username" placeholder="Usuario">
         </div>
-        <div class="form-group">
+        <div style="margin-top: 10px;" class="form-group">
             <input class="form-control" type="email" name="email" placeholder="E-mail">
         </div>
-        <div class="form-group">
+        <div style="margin-top: 10px;" class="form-group">
             <input class="form-control" type="password" name="password" placeholder="Contraseña">
         </div>
-        <div class="form-group">
+        <div style="margin-top: 10px;" class="form-group">
             <input class="form-control" type="password" name="confirmation" placeholder="Confirmar Contraseña">
         </div>
-        <input class="btn btn-primary" type="submit" value="Registrarse">
+        <input style="margin-top: 15px;" class="btn btn-primary" type="submit" value="Registrarse">
     </form>
-
+</div>
     ¿Ya tienes cuenta? <a href="{% url 'login' %}">Ingresa aquí.</a>
 
 {% endblock %}

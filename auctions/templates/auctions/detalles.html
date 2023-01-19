@@ -20,19 +20,19 @@
         La subasta terminó, ¡has ganado!
     </div>
     {% endif %}
-            <h2>{{ listingDetails.name }}</h2>    
+            <h2 style="margin-top: 10px;">{{ listingDetails.name }}</h2>    
     <div class="modal-body row">
         <div class="col-md-7" style="margin-top: 3px;">
             <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                   <div class="carousel-item active" data-bs-interval="2000">
-                    <img src="{{ listingDetails.imgURL1 }}" class="d-block w-70">
+                    <img src="{{ listingDetails.imgURL1 }}" class="d-block w-100">
                   </div>
                   <div class="carousel-item" data-bs-interval="2000">
-                    <img src="{{ listingDetails.imgURL2 }}" class="d-block w-70">
+                    <img src="{{ listingDetails.imgURL2 }}" class="d-block w-100">
                   </div>
                   <div class="carousel-item" data-bs-interval="2000">
-                    <img src="{{ listingDetails.imgURL3 }}" class="d-block w-70">
+                    <img src="{{ listingDetails.imgURL3 }}" class="d-block w-100">
                   </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -80,7 +80,7 @@
                     {% endif %}
                 {% endif %}
             </div>
-            <h4>Precio Inicial ${{ listingDetails.price.bid }}</h4> 
+            <h4 style="margin-top: 15px;">Precio Inicial ${{ listingDetails.price.bid }}</h4> 
             <p>{{ listingDetails.description }}</p>
             <p><strong>Usuario: {{ listingDetails.usuario }}</strong></p>
             </div>

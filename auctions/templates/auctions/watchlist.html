@@ -9,8 +9,8 @@
         <img src="{{ watchlist.imgURL1 }}" class="card-img-top" alt="{{ watchlist.name }}">
         <div class="card-body">
           <h5 class="card-title">{{ watchlist.name }}</h5>
-          <p class="card-text">$ {{ watchlist.price }}.</p>
-          <p class="card-text">{{ watchlist.description }}.</p>
+          <p class="card-text">$ {{ watchlist.price.bid }}.</p>
+          <p class="card-text"><strong>{{ watchlist.available }}.</strong></p>
           <a href="{% url 'detalles' id=watchlist.id %}" class="btn btn-primary">Ver detalles</a>
         </div>
       </div>
