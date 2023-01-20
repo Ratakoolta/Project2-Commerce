@@ -24,7 +24,6 @@ def create(request):
     else:
         name = request.POST["name"]
         price = request.POST["price"]
-        available = request.POST["available"]
         description = request.POST["description"]
         imgURL1 = request.POST["imgURL1"]
         imgURL2 = request.POST["imgURL2"]
@@ -37,7 +36,6 @@ def create(request):
         newListing = Listing(
             name=name,
             price=bid,
-            available=available,
             description=description,
             imgURL1=imgURL1,
             imgURL2=imgURL2,
