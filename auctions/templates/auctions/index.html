@@ -13,9 +13,9 @@
             </select>
         <button type="submit" class="btn btn-primary">Seleccionar</button>
     </form>
-    <div class="row mx-2">
+    <div class="row mx-3">
     {% for subastas in subastas %}
-    <div class="card mx-2" style="width: 18rem;">
+    <div class="card mx-2" style="width: 18rem; margin-top: 15px;">
         <img src="{{ subastas.imgURL1 }}" class="card-img-top" alt="{{ subastas.name }}">
         <div class="card-body">
           <h5 class="card-title">{{ subastas.name }}</h5>

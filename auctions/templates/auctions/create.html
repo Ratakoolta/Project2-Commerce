@@ -16,9 +16,9 @@
         <div style="margin-top: 10px;" class="form-group">
             <label for="available">Disponibilidad:</label>
             <br>
-            <select name="available" id="available">
-                <option value="Disponible">Disponible</option>
-                <option value="Agotado">Agotado</option>
+            <select class="btn btn-secondary btn-sm dropdown-toggle" style="background-color: rgb(94, 94, 202);" name="available" id="available">
+                <option style="text-align: left;" value="Disponible">Disponible</option>
+                <option style="text-align: left;" value="Agotado">Agotado</option>
             </select>
         </div>
         <div style="margin-top: 10px;" class="form-group">
@@ -39,9 +39,9 @@
         </div>
         <div style="margin-top: 15px;" class="form-group">
             <label for="category">Escoja una categoria:</label>
-            <select name="category" id="category">
+            <select class="btn btn-secondary btn-sm dropdown-toggle" style="background-color: rgb(94, 94, 202);" name="category" id="category">
                 {% for categoria in categorias %}
-                <option value="{{ categoria }}">{{ categoria }}</option>
+                <option style="text-align: left;" value="{{ categoria }}">{{ categoria }}</option>
                 {% endfor %}
             </select>
         </div>
