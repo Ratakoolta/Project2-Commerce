@@ -10,7 +10,11 @@
         <div class="card-body">
           <h5 class="card-title">{{ watchlist.name }}</h5>
           <p class="card-text">$ {{ watchlist.price.bid }}.</p>
-          <p class="card-text"><strong>{{ watchlist.available }}.</strong></p>
+          {% if watchlist.isActive == True %}
+            <p style="color: rgb(18, 124, 36);" class="card-text"><strong>Subasta Activa </strong></p>
+          {% else %}
+            <p style="color: brown;" class="card-text"><strong>Subasta Finalizada</strong></p>
+          {% endif %}
           <a href="{% url 'detalles' id=watchlist.id %}" class="btn btn-primary">Ver detalles</a>
         </div>
       </div>
